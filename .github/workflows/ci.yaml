@@ -27,7 +27,7 @@ jobs:
           mv actionlint "$LOCAL_BIN"
           echo "$LOCAL_BIN" >> "$GITHUB_PATH"
       - uses: actions/setup-python@v2
-      - uses: pre-commit/action@v2.0.0
+      - uses: pre-commit/action@v2.0.3
   action-test:
     name: Action test
     runs-on: ubuntu-latest
