@@ -18,7 +18,7 @@ outputs:
     description: "Major version of the new release"
     value: ${{ steps.release.outputs.release-major }}
 runs:
-  using: "composite"
+  using: composite
   steps:
     - name: Semantic Release
       id: release
@@ -26,12 +26,6 @@ runs:
       with:
         dry_run: ${{ inputs.dry-run }}
         extra_plugins: ${{ inputs.extra-plugins }}
-    - name: Results
-      shell: bash
-      run: |
-        echo "new_release_published: ${{ steps.release.outputs.new_release_published }}"
-        echo "new_release_version: ${{ steps.release.outputs.new_release_version }}"
-        echo "new_release_major_version: ${{ steps.release.outputs.new_release_major_version }}"
     - name: Fetch Tags
       if: steps.release.outputs.new_release_published == 'true'
       shell: bash
