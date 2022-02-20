@@ -1,0 +1,25 @@
+name: "GitHub Action Lint"
+description: "Lints GitHub Actions"
+runs:
+  using: composite
+  steps:
+    - uses: wagoid/commitlint-github-action@v4
+      with:
+        configFile: .commitlintrc.yml
+    - name: Run npm ci if needed
+      shell: bash
+      run: |
+        if [ -f package-lock.json ]; then
+          npm ci
+        fi
+    - name: Download actionlint
+      id: get_actionlint
+      shell: bash
+      run: |
+        bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+        export LOCAL_BIN="$HOME/.local/bin"
+        mkdir -p "$LOCAL_BIN"
+        mv actionlint "$LOCAL_BIN"
+        echo "$LOCAL_BIN" >> "$GITHUB_PATH"
+    - uses: actions/setup-python@v2
+    - uses: pre-commit/action@v2.0.0
