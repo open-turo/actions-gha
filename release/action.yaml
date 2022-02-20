@@ -1,0 +1,43 @@
+name: "GitHub Action Release & Publish"
+description: "Publish a new release of the Action - adds a new major tag"
+inputs:
+  dry-run:
+    required: false
+    description: "Whether to run semantic release in `dry-run` mode. It will override the dryRun attribute in your configuration file"
+  extra-plugins:
+    required: false
+    description: "Extra plugins for pre-install. You can also specify specifying version range for the extra plugins if you prefer."
+outputs:
+  new_release_published:
+    description: "Whether a new release was published"
+    value: ${{ steps.release.outputs.new-release-published }}
+  new_release_version:
+    description: "Version of the new release"
+    value: ${{ steps.release.outputs.release-version }}
+  new_release_major_version:
+    description: "Major version of the new release"
+    value: ${{ steps.release.outputs.release-major }}
+runs:
+  using: "composite"
+  steps:
+    - name: Semantic Release
+      uses: cycjimmy/semantic-release-action@v2
+      with:
+        dry_run: ${{ inputs.dry-run }}
+        extra_plugins: ${{ inputs.extra-plugins }}
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+    - name: Fetch Tags
+      if: steps.semantic.outputs.new_release_published == 'true'
+      shell: bash
+      run: |
+        git fetch --tags
+        git clean -fd
+    - name: Major branch
+      if: steps.semantic.outputs.new_release_published == 'true'
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      shell: bash
+      run: |
+        git branch -f v${{ steps.semantic.outputs.new_release_major_version }}
+        git push -f origin v${{ steps.semantic.outputs.new_release_major_version }}
