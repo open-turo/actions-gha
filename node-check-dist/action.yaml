@@ -1,0 +1,52 @@
+name: "GitHub Action Lint"
+description: "Lints GitHub Actions"
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: npm ci
+    - shell: bash
+      run: npm run prepare
+    - name: Compare the commited and actual dist/ builds
+      shell: bash
+      run: |
+        if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
+          echo "Detected uncommitted changes after build.  See status below:"
+          git diff
+          echo ""
+          echo "please run:"
+          echo "    npm run prepare"
+          echo ""
+          echo "and commit the changes"
+          exit 1
+        fi
+    - name: Check for run instructions
+      uses: peter-evans/find-comment@v1
+      if: success() || failure()
+      id: fc
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: "github-actions[bot]"
+        body-includes: "npm run prepare"
+    - name: Create instructions comment
+      if: failure() && steps.fc.outputs.comment-id == ''
+      uses: peter-evans/create-or-update-comment@v1
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |
+          Changes need to be built and commited to `./dist`.
+
+          In your local repo, run:
+          ```
+          npm run prepare
+          git commit -a --amend --no-edit
+          ```
+          This will add those changes to your last commit.  Push that to your PR.
+
+    - name: Delete instructions comment
+      if: success() && steps.fc.outputs.comment-id != ''
+      uses: jungwinter/comment@v1
+      with:
+        type: delete
+        comment_id: ${{ steps.fc.outputs.comment-id }}
+        token: ${{ secrets.GITHUB_TOKEN }}

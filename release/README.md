@@ -1,11 +1,5 @@
 # GitHub Action Release
 
-![][version-image]
-![][workflows-badge-image]
-[![Release date][release-date-image]][release-url]
-[![semantic-release][semantic-image]][semantic-url]
-[![npm license][license-image]][license-url]
-
 GitHub Action for [Semantic Release][semantic-url].
 
 ## Usage
@@ -102,15 +96,19 @@ Release Config:
 > {Optional Input Parameter} Whether to run semantic release in `dry-run` mode.<br>It will override the dryRun attribute in your configuration file.
 
 ```yaml
-steps:
-  - name: Checkout
-    uses: actions/checkout@v2
-  - name: Action Semantic Release
-    uses: open-turo/actions-gha/release@v1
-    with:
-      dry_run: true
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  build:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Action Semantic Release
+        uses: open-turo/actions-gha/release@v1
+        with:
+          dry_run: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ### Outputs
@@ -125,42 +123,22 @@ steps:
 #### Using Output Variables:
 
 ```yaml
-steps:
-  - name: Checkout
-    uses: actions/checkout@v2
-  - name: Semantic Release
-    uses: cycjimmy/semantic-release-action@v2
-    id: semantic # Need an `id` for output variables
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+jobs:
+  build:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Semantic Release
+        uses: open-turo/actions-gha/release@v1
+        id: semantic # Need an `id` for output variables
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  - name: Do something when a new release published
-    if: steps.semantic.outputs.new_release_published == 'true'
-    run: |
-      echo ${{ steps.semantic.outputs.new_release_version }}
-      echo ${{ steps.semantic.outputs.new_release_major_version }}
-      echo ${{ steps.semantic.outputs.new_release_minor_version }}
-      echo ${{ steps.semantic.outputs.new_release_patch_version }}
+      - name: Do something when a new release published
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          echo ${{ steps.semantic.outputs.new_release_version }}
+          echo ${{ steps.semantic.outputs.new_release_major_version }}
 ```
-
-## Changelog
-
-See [CHANGELOG][changelog-url].
-
-## License
-
-This project is released under the [MIT License][license-url].
-
-<!-- Links: -->
-
-[version-image]: https://img.shields.io/github/package-json/v/cycjimmy/semantic-release-action
-[workflows-badge-image]: https://github.com/cycjimmy/semantic-release-action/workflows/Test%20Release/badge.svg
-[release-date-image]: https://img.shields.io/github/release-date/cycjimmy/semantic-release-action
-[release-url]: https://github.com/cycjimmy/semantic-release-action/releases
-[semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
-[semantic-url]: https://github.com/semantic-release/semantic-release
-[license-image]: https://img.shields.io/npm/l/@cycjimmy/semantic-release-action.svg
-[license-url]: https://github.com/cycjimmy/semantic-release-action/blob/master/LICENSE
-[changelog-url]: https://github.com/cycjimmy/semantic-release-action/blob/master/docs/CHANGELOG.md
-[github-packages-registry]: https://github.com/features/packages
