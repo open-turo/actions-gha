@@ -1,5 +1,9 @@
 name: "GitHub Action Lint"
 description: "Lints GitHub Actions"
+inputs:
+  github-token:
+    required: true
+    description: "GitHub token that can create/delete comments. $${{ secrets.GITHUB_TOKEN }}"
 runs:
   using: composite
   steps:
@@ -49,4 +53,4 @@ runs:
       with:
         type: delete
         comment_id: ${{ steps.fc.outputs.comment-id }}
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ inputs.github-token }}
