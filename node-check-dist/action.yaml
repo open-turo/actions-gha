@@ -3,7 +3,7 @@ description: "Lints GitHub Actions"
 inputs:
   github-token:
     required: true
-    description: "GitHub token that can create/delete comments. $${{ secrets.GITHUB_TOKEN }}"
+    description: "GitHub token that can create/delete comments. 'github-token: ${{ '${{ secrets.GITHUB_TOKEN }}' }}'"
 runs:
   using: composite
   steps:
