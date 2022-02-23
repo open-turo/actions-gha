@@ -1,4 +1,4 @@
-# GitHub Action Node Check Dist
+# GitHub Action Check Node Build
 
 GitHub Action runs checks to see if the code has changed without running a build.
 
@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Dist check
-        uses: open-turo/actions-gha/node-check-dist@v1
+        uses: open-turo/actions-gha/check-build@v1
 ```
 
 ## Dist check

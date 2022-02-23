@@ -1,19 +1,28 @@
 name: "GitHub Action Lint"
 description: "Lints GitHub Actions"
+inputs:
+  github-token:
+    required: true
+    description: "GitHub token that can create/delete comments. Usually - 'secrets.GITHUB_TOKEN'"
 runs:
   using: composite
   steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - uses: wagoid/commitlint-github-action@v4
       with:
         configFile: .commitlintrc.yml
     - name: Run npm ci if needed
+      if: hashFiles('package-lock.json') != ''
       shell: bash
-      run: |
-        if [ -f package-lock.json ]; then
-          npm ci
-        fi
+      run: npm ci
     - uses: KeisukeYamashita/setup-release@v1.0.2
       with:
         repository: rhysd/actionlint
     - uses: actions/setup-python@v2
     - uses: pre-commit/action@v2.0.0
+    - uses: open-turo/actions-gha/check-build@v1
+      if: hashFiles('package-lock.json') != ''
+      with:
+        github-token: ${{ inputs.github-token }}
