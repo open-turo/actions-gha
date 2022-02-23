@@ -13,6 +13,14 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./lint
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./test
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
   action-test:
     name: Action test
     runs-on: ubuntu-latest

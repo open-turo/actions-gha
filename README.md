@@ -26,7 +26,7 @@ jobs:
         uses: open-turo/actions-gha/lint@v1
 ```
 
-### action: [`node-check-dist`](./node-check-dist)
+### action: [`check-build`](./check-build)
 
 ```yaml
 jobs:
@@ -35,7 +35,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Dist check
-        uses: open-turo/actions-gha/node-check-dist@v1
+        uses: open-turo/actions-gha/check-build@v1
 ```
 
 ### action: [`release`](./release)
@@ -54,6 +54,18 @@ jobs:
           dry_run: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+### action: [`test`](./test)
+
+```yaml
+jobs:
+  test:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        uses: open-turo/actions-gha/test@v1
 ```
 
 <!-- Links: -->

@@ -1,5 +1,5 @@
-name: "GitHub Action Lint"
-description: "Lints GitHub Actions"
+name: "Check node build"
+description: "Checks whether node has been built and committed into the ./dist directory"
 inputs:
   github-token:
     required: true
@@ -46,7 +46,6 @@ runs:
           git commit -a --amend --no-edit
           ```
           This will add those changes to your last commit.  Push that to your PR.
-
     - name: Delete instructions comment
       if: success() && steps.fc.outputs.comment-id != ''
       uses: jungwinter/comment@v1
