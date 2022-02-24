@@ -16,6 +16,8 @@ jobs:
         uses: open-turo/actions-gha/lint@v1
 ```
 
+Note: by default, this action will perform actions/checkout as its first step.
+
 ## Lint Checks
 
 This action runs the following lint checks:

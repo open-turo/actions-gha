@@ -9,15 +9,18 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v2
       - uses: ./lint
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - uses: ./test
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -25,9 +28,8 @@ jobs:
     name: Action test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v2
       - uses: ./release
         id: release
         with:

@@ -1,6 +1,10 @@
 name: "GitHub Action Release & Publish"
 description: "Publish a new release of the Action - adds a new major tag"
 inputs:
+  checkout-repo:
+    required: false
+    description: "Perform checkout as first step of action"
+    default: true
   dry-run:
     required: false
     description: "Whether to run semantic release in `dry-run` mode. It will override the dryRun attribute in your configuration file"
@@ -20,6 +24,10 @@ outputs:
 runs:
   using: composite
   steps:
+    - uses: actions/checkout@v2
+      if: inputs.checkout-repo
+      with:
+        fetch-depth: 0
     - name: Semantic Release
       id: release
       uses: cycjimmy/semantic-release-action@v2

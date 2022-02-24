@@ -8,11 +8,11 @@ GitHub Action runs tests appropriate for this action.
 jobs:
   test:
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Test
         uses: open-turo/actions-gha/test@v1
 ```
+
+Note: by default, this action will perform actions/checkout as its first step.
 
 ## Test
 
