@@ -1,6 +1,10 @@
 name: "GitHub Action Lint"
 description: "Lints GitHub Actions"
 inputs:
+  checkout-repo:
+    required: false
+    description: "Perform checkout as first step of action"
+    default: true
   github-token:
     required: true
     description: "GitHub token that can create/delete comments. Usually - 'secrets.GITHUB_TOKEN'"
@@ -8,6 +12,7 @@ runs:
   using: composite
   steps:
     - uses: actions/checkout@v2
+      if: inputs.checkout-repo
       with:
         fetch-depth: 0
     - uses: wagoid/commitlint-github-action@v4

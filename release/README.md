@@ -4,6 +4,8 @@ GitHub Action for [Semantic Release][semantic-url].
 
 ## Usage
 
+Note: by default, this action will perform actions/checkout as its first step.
+
 ### Step1: Set any [Semantic Release Configuration](https://github.com/semantic-release/semantic-release/blob/master/docs/usage/configuration.md#configuration) in your repository.
 
 ### Step2: [Add Secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets) in your repository for the [Semantic Release Authentication](https://github.com/semantic-release/semantic-release/blob/master/docs/usage/ci-configuration.md#authentication) Environment Variables.
