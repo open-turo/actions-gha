@@ -24,6 +24,7 @@ jobs:
       - uses: ./test
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
   action-test:
     name: Action test
     runs-on: ubuntu-latest
