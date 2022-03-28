@@ -16,12 +16,10 @@ Note: by default, this action will perform actions/checkout as its first step.
 
 ```yaml
 steps:
-  - name: Checkout
-    uses: actions/checkout@v2
-  - name: Action Semantic Release
+  - name: Release
     uses: open-turo/actions-gha/release@v1
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    with:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 **IMPORTANT**: `GITHUB_TOKEN` does not have the required permissions to operate on protected branches.
@@ -29,34 +27,12 @@ If you are using this action for protected branches, replace `GITHUB_TOKEN` with
 
 ### Inputs
 
-| Input Parameter | Required | Description                                                                                                              |
-| :-------------: | :------: | ------------------------------------------------------------------------------------------------------------------------ |
-|     branch      |  false   | The branch on which releases should happen.[[Details](#branch)]<br>Only support for **semantic-release older than v16**. |
-|  extra_plugins  |  false   | Extra plugins for pre-install. [[Details](#extra_plugins)]                                                               |
-|     dry_run     |  false   | Whether to run semantic release in `dry-run` mode. [[Details](#dry_run)]                                                 |
+| Input Parameter | Required | Description                                                              |
+| :-------------: | :------: | ------------------------------------------------------------------------ |
+|     dry-run     |  false   | Whether to run semantic release in `dry-run` mode. [[Details](#dry-run)] |
+|  extra-plugins  |  false   | Extra plugins for pre-install. [[Details](#extra-plugins)]               |
 
-#### branch
-
-> {Optional Input Parameter} Similar to parameter `branches`. The branch on which releases should happen.<br>`branch` only supports for **semantic-release older than v16**.
-
-```yaml
-steps:
-  - name: Checkout
-    uses: actions/checkout@v2
-  - name: Semantic Release
-    uses: cycjimmy/semantic-release-action@v2
-    with:
-      semantic_version: 15.13.28
-      # you can set branch for semantic-release older than v16.
-      branch: your-branch
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-```
-
-It will override the `branch` attribute in your configuration file. If the attribute is not configured on both sides, the default is `master`.
-
-#### extra_plugins
+#### extra-plugins
 
 > {Optional Input Parameter} Extra plugins for pre-install.
 
@@ -68,17 +44,13 @@ Github Action Workflow:
 
 ```yaml
 steps:
-  - name: Checkout
-    uses: actions/checkout@v2
-  - name: Action Semantic Release
+  - name: Release
     uses: open-turo/actions-gha/release@v1
     with:
       # You can specify specifying version range for the extra plugins if you prefer.
-      extra_plugins: |
+      extra-plugins: |
         @semantic-release/changelog@3.0.0
         @semantic-release/git
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 Similar to parameter `semantic_version`. _It is recommended to manually specify a version of semantic-release plugins to prevent errors caused._
@@ -93,34 +65,28 @@ Release Config:
   ]
 ```
 
-#### dry_run
+#### dry-run
 
-> {Optional Input Parameter} Whether to run semantic release in `dry-run` mode.<br>It will override the dryRun attribute in your configuration file.
+> {Optional Input Parameter} Whether to run semantic release in `dry-run` mode.<br>It will override the `dryRun` attribute in your configuration file.
 
 ```yaml
 jobs:
   build:
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Action Semantic Release
+      - name: Release
         uses: open-turo/actions-gha/release@v1
         with:
-          dry_run: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          dry-run: true
 ```
 
 ### Outputs
 
 |     Output Parameter      | Description                                                                                                                       |
 | :-----------------------: | --------------------------------------------------------------------------------------------------------------------------------- |
-|   new_release_published   | Whether a new release was published (`true` or `false`)                                                                           |
-|    new_release_version    | Version of the new release. (e.g. `1.3.0`)                                                                                        |
-| new_release_major_version | Major version of the new release. (e.g. `1`)                                                                                      |
-|    new_release_channel    | The distribution channel on which the last release was initially made available (undefined for the default distribution channel). |
+|   new-release-published   | Whether a new release was published (`true` or `false`)                                                                           |
+|    new-release-version    | Version of the new release. (e.g. `1.3.0`)                                                                                        |
+| new-release-major-version | Major version of the new release. (e.g. `1`)                                                                                      |
+|    new-release-channel    | The distribution channel on which the last release was initially made available (undefined for the default distribution channel). |
 
 #### Using Output Variables:
 
@@ -128,19 +94,12 @@ jobs:
 jobs:
   build:
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Semantic Release
+      - name: Release
         uses: open-turo/actions-gha/release@v1
         id: semantic # Need an `id` for output variables
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Do something when a new release published
-        if: steps.semantic.outputs.new_release_published == 'true'
+        if: steps.semantic.outputs.new-release-published == 'true'
         run: |
-          echo ${{ steps.semantic.outputs.new_release_version }}
-          echo ${{ steps.semantic.outputs.new_release_major_version }}
+          echo ${{ steps.semantic.outputs.new-release-version }}
+          echo ${{ steps.semantic.outputs.new-release-major-version }}
 ```

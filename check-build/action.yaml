@@ -3,16 +3,17 @@ description: Checks whether node has been built and committed into the ./dist di
 inputs:
   github-token:
     required: true
-    description: GitHub token that can create/delete comments. Usually - 'secrets.GITHUB_TOKEN'
+    description: GitHub token that can create/delete comments. e.g. 'secrets.GITHUB_TOKEN'
 runs:
   using: composite
   steps:
-    - shell: bash
+    - name: Run ci
+      shell: bash
       run: npm ci
     - name: Npm run prepare
       shell: bash
       run: npm run prepare
-    - name: Compare the commited and actual dist/ builds
+    - name: Compare the committed and actual dist/ builds
       shell: bash
       run: |
         if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then

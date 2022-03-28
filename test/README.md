@@ -1,6 +1,6 @@
 # GitHub Action Test
 
-GitHub Action runs tests appropriate for this action.
+GitHub Action runs tests within the consuming GitHub repository.
 
 ## Usage
 
@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Test
         uses: open-turo/actions-gha/test@v1
+          ## example value for github-token provided below
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 Note: by default, this action will perform actions/checkout as its first step.
