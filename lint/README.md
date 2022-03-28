@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Lint
         uses: open-turo/actions-gha/lint@v1
+          ## example value for github-token provided below
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 Note: by default, this action will perform actions/checkout as its first step.
@@ -18,8 +20,7 @@ Note: by default, this action will perform actions/checkout as its first step.
 
 This action runs the following lint checks:
 
-- [wagoid/commitlint-github-action](https://github.com/wagoid/commitlint-github-action)
-- [pre-commit/action](https://github.com/pre-commit/action)
+- [action-pre-commit](https://github.com/open-turo/action-pre-commit)
 - [check-build](../check-build) - if the action is `node`, this checks that build has been run and committed.
 
 ## Notes

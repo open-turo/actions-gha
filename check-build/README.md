@@ -8,10 +8,11 @@ GitHub Action runs checks to see if the code has changed without running a build
 jobs:
   build:
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Dist check
+      - name: Check build
         uses: open-turo/actions-gha/check-build@v1
+        with:
+          ## example value for github-token provided below
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## Dist check

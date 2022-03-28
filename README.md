@@ -18,12 +18,10 @@ GitHub Actions for GitHub Action repositories
 jobs:
   build:
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Action Lint
+      - name: Lint
         uses: open-turo/actions-gha/lint@v1
+          ## example value for github-token provided below
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ### action: [`check-build`](./check-build)
@@ -32,10 +30,10 @@ jobs:
 jobs:
   build:
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Dist check
+      - name: Check build
         uses: open-turo/actions-gha/check-build@v1
+          ## example value for github-token provided below
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ### action: [`release`](./release)
@@ -44,16 +42,10 @@ jobs:
 jobs:
   build:
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Action Semantic Release
+      - name: Release
         uses: open-turo/actions-gha/release@v1
         with:
           dry_run: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ### action: [`test`](./test)
@@ -62,10 +54,10 @@ jobs:
 jobs:
   test:
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Test
         uses: open-turo/actions-gha/test@v1
+          ## example value for github-token provided below
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 <!-- Links: -->
