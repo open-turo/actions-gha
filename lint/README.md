@@ -8,11 +8,7 @@ GitHub Action runs lint on a GitHub Action
 jobs:
   build:
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Action Lint
+      - name: Lint
         uses: open-turo/actions-gha/lint@v1
 ```
 
@@ -32,5 +28,5 @@ This action runs the following lint checks:
   - It will execute `npm ci` before running the `pre-commit` step.
   - It will run the `check-build` action.
 - `actionlint` will be installed and in the path to ensure that https://github.com/rhysd/actionlint can be run directly.
-- This expects that `.commitlintrc.yml` will be present to enforce [`conventional-commit`](https://github.com/wagoid/commitlint-github-action).
+- This expects that `.commitlintrc.yaml` will be present to enforce [`conventional-commit`](https://github.com/wagoid/commitlint-github-action).
 - Checkout must have history to ensure that commit message linting works.

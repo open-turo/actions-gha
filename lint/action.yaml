@@ -1,34 +1,33 @@
-name: "GitHub Action Lint"
-description: "Lints GitHub Actions"
+name: GitHub Action Lint
+description: Lints GitHub Actions
 inputs:
   checkout-repo:
     required: false
-    description: "Perform checkout as first step of action"
-    default: true
+    description: Perform checkout as first step of action
+    default: "true"
   github-token:
     required: true
-    description: "GitHub token that can create/delete comments. Usually - 'secrets.GITHUB_TOKEN'"
+    description: GitHub token that can create/delete comments. Usually - 'secrets.GITHUB_TOKEN'
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
       if: inputs.checkout-repo
       with:
         fetch-depth: 0
-    - uses: wagoid/commitlint-github-action@v4
-      if: (github.actor!= 'dependabot[bot]') && (contains(github.head_ref, 'dependabot/github_actions/') == false)
-      with:
-        configFile: .commitlintrc.yml
     - name: Run npm ci if needed
       if: hashFiles('package-lock.json') != ''
       shell: bash
       run: npm ci
-    - uses: KeisukeYamashita/setup-release@v1.0.2
+    - name: Install actionlint
+      uses: KeisukeYamashita/setup-release@v1.0.2
       with:
         repository: rhysd/actionlint
-    - uses: actions/setup-python@v2
-    - uses: pre-commit/action@v2.0.0
-    - uses: open-turo/actions-gha/check-build@v1
+    - name: Pre-commit
+      uses: open-turo/action-pre-commit@v1
+    - name: Check build
+      uses: open-turo/actions-gha/check-build@v1
       if: hashFiles('package-lock.json') != ''
       with:
         github-token: ${{ inputs.github-token }}

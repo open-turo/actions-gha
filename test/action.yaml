@@ -1,17 +1,18 @@
-name: "GitHub Action: Test"
-description: "Tests GitHub Actions"
+name: GitHub Action Test
+description: Tests GitHub Actions
 inputs:
   checkout-repo:
     required: false
-    description: "Perform checkout as first step of action"
-    default: true
+    description: Perform checkout as first step of action
+    default: "true"
   github-token:
     required: true
-    description: "GitHub token passed to coveralls. Usually - 'secrets.GITHUB_TOKEN'. Coveralls uses this token to verify the posted coverage data on the repo and create a new check based on the results. It is built into Github Actions and does not need to be manually specified in your secrets store."
+    description: GitHub token passed to coveralls. Usually - 'secrets.GITHUB_TOKEN'. Coveralls uses this token to verify the posted coverage data on the repo and create a new check based on the results. It is built into Github Actions and does not need to be manually specified in your secrets store.
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
       if: inputs.checkout-repo
     - name: Test node
       if: hashFiles('package-lock.json') != ''
@@ -19,7 +20,8 @@ runs:
       run: |
         npm ci
         npm test -- --coverage
-    - uses: coverallsapp/github-action@master
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
       if: hashFiles('package-lock.json') != ''
       with:
         github-token: ${{ inputs.github-token }}
