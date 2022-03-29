@@ -1,25 +1,25 @@
-name: "GitHub Action Release & Publish"
-description: "Publish a new release of the Action - adds a new major tag"
+name: GitHub Action Release & Publish
+description: Publish a new release of the Action - adds a new major tag
 inputs:
   checkout-repo:
     required: false
-    description: "Perform checkout as first step of action"
-    default: true
+    description: Perform checkout as first step of action
+    default: "true"
   dry-run:
     required: false
-    description: "Whether to run semantic release in `dry-run` mode. It will override the dryRun attribute in your configuration file"
+    description: Whether to run semantic release in `dry-run` mode. It will override the dryRun attribute in your configuration file
   extra-plugins:
     required: false
-    description: "Extra plugins for pre-install. You can also specify specifying version range for the extra plugins if you prefer."
+    description: Extra plugins for pre-install. You can also specify specifying version range for the extra plugins if you prefer.
 outputs:
-  new_release_published:
-    description: "Whether a new release was published"
-    value: ${{ steps.release.outputs.new_release_published }}
-  new_release_version:
-    description: "Version of the new release"
-    value: ${{ steps.release.outputs.new_release_version }}
-  new_release_major_version:
-    description: "Major version of the new release"
+  new-release-published:
+    description: Whether a new release was published
+    value: ${{ steps.release.outputs.new-release-published }}
+  new-release-version:
+    description: Version of the new release
+    value: ${{ steps.release.outputs.new-release-version }}
+  new-release-major-version:
+    description: Major version of the new release
     value: ${{ steps.release.outputs.release-major }}
 runs:
   using: composite
@@ -35,13 +35,13 @@ runs:
         dry_run: ${{ inputs.dry-run }}
         extra_plugins: ${{ inputs.extra-plugins }}
     - name: Fetch Tags
-      if: steps.release.outputs.new_release_published == 'true'
+      if: steps.release.outputs.new-release-published == 'true'
       shell: bash
       run: |
         git fetch --tags
         git clean -fd
     - name: Major branch
-      if: steps.release.outputs.new_release_published == 'true'
+      if: steps.release.outputs.new-release-published == 'true'
       uses: open-turo/action-major-release@v1
       with:
-        major-version: ${{ steps.release.outputs.new_release_major_version }}
+        major-version: ${{ steps.release.outputs.new-release-major-version }}

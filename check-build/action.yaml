@@ -1,15 +1,16 @@
-name: "Check node build"
-description: "Checks whether node has been built and committed into the ./dist directory"
+name: Check node build
+description: Checks whether node has been built and committed into the ./dist directory
 inputs:
   github-token:
     required: true
-    description: "GitHub token that can create/delete comments. Usually - 'secrets.GITHUB_TOKEN'"
+    description: GitHub token that can create/delete comments. Usually - 'secrets.GITHUB_TOKEN'
 runs:
   using: composite
   steps:
     - shell: bash
       run: npm ci
-    - shell: bash
+    - name: Npm run prepare
+      shell: bash
       run: npm run prepare
     - name: Compare the commited and actual dist/ builds
       shell: bash
