@@ -7,10 +7,19 @@ inputs:
     default: "true"
   dry-run:
     required: false
-    description: Whether to run semantic release in `dry-run` mode. It will override the `dryRun` attribute in your configuration file
+    description: >-
+      Whether to run semantic release in `dry-run` mode. It will override the
+      `dryRun` attribute in your configuration file
   extra-plugins:
     required: false
-    description: Extra plugins for pre-install. You can also specify specifying version range for the extra plugins if you prefer.
+    description: >-
+      Extra plugins for pre-install. You can also specify specifying version
+      range for the extra plugins if you prefer.
+  github-token:
+    required: false
+    description: >-
+      GitHub token that can create/delete comments. Usually -
+      'secrets.GITHUB_TOKEN'
 outputs:
   new-release-published:
     description: Whether a new release was published
@@ -25,13 +34,15 @@ runs:
   using: composite
   steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       if: inputs.checkout-repo
       with:
         fetch-depth: 0
     - name: Semantic release
       id: release
       uses: cycjimmy/semantic-release-action@v2
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token || env.GITHUB_TOKEN }}
       with:
         dry_run: ${{ inputs.dry-run }}
         extra_plugins: ${{ inputs.extra-plugins }}
