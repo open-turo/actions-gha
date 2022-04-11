@@ -11,7 +11,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: ./lint
+      - name: Lint
+        uses: ./lint
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -21,7 +22,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: ./test
+      - name: Test
+        uses: ./test
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -31,7 +33,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: ./release
+      - name: Release
+        uses: ./release
         id: release
         with:
           dry-run: true
