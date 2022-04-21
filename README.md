@@ -1,4 +1,6 @@
-# actions-gha
+# `open-turo/actions-gha`
+
+GitHub Actions for GitHub Action repositories
 
 [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://GitHub.com/Naereen/StrapDown.js/releases/)
 [![Release date][release-date-image]][release-url]
@@ -8,57 +10,47 @@
 [![semantic-release][semantic-image]][semantic-url]
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
-GitHub Actions for GitHub Action repositories
-
 ## Actions
 
 ### action: [`lint`](./lint)
 
-```yaml
-jobs:
-  build:
-    steps:
-      - name: Lint
-        uses: open-turo/actions-gha/lint@v1
-          ## example value for github-token provided below
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-```
+Lint will run pre-commit linters against the consumer repository, optionally checking out, optionally running `npm ci`, install [actionlint](rhysd/actionlint), run [action-pre-commit](https://github.com/open-turo/action-pre-commit), and lastly optionally run [check-build](./check-build/README.md).
+
+See usage [here](./lint/README.md#usage).
+
+Documentation is found [here](./lint/README.md).
 
 ### action: [`check-build`](./check-build)
 
-```yaml
-jobs:
-  build:
-    steps:
-      - name: Check build
-        uses: open-turo/actions-gha/check-build@v1
-          ## example value for github-token provided below
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-```
+Checks to see if there are any changes in the consumer repository by running `npm run prepare` and determining if differences exist in the generated `dist` directory.
+
+See usage [here](./check-build/README.md#usage).
+
+Documentation is found [here](./check-build/README.md).
 
 ### action: [`release`](./release)
 
-```yaml
-jobs:
-  build:
-    steps:
-      - name: Release
-        uses: open-turo/actions-gha/release@v1
-        with:
-          dry_run: true
-```
+Release will optionally checkout the consumer repository and attempt a [Semantic Release](https://semantic-release.gitbook.io/semantic-release/usage/configuration) using the root level configuration file (e.g. `.releaserc.json`) indicating branches and plugins to use to facilitate the release. If a new release is published, a major version will also be released.
+
+See usage [here](./release/README.md#usage).
+
+Documentation is found [here](./release/README.md).
 
 ### action: [`test`](./test)
 
-```yaml
-jobs:
-  test:
-    steps:
-      - name: Test
-        uses: open-turo/actions-gha/test@v1
-          ## example value for github-token provided below
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-```
+Optionally checks out the GitHub consumer repository, and if a `package-lock.json` file is found at the root level directory, runs `npm ci`, `npm test`, and [coveralls](https://github.com/coverallsapp/github-action).
+
+See usage [here](./test/README.md#usage).
+
+Documentation is found [here](./test/README.md).
+
+## Get Help
+
+Each Action has a detailed README for how to use it as referenced above. Please review Issues, post new Issues against this repository as needed.
+
+## Contributions
+
+Please see [here](https://github.com/open-turo/contributions) for guidelines on how to contribute to this project.
 
 <!-- Links: -->
 

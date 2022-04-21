@@ -1,5 +1,5 @@
 name: GitHub Action Release & Publish
-description: Publish a new release of the Action - adds a new major tag
+description: GitHub Action that produces a new Release of an Action - adds a new major tag
 inputs:
   checkout-repo:
     required: false
@@ -18,8 +18,7 @@ inputs:
   github-token:
     required: false
     description: >-
-      GitHub token that can create/delete comments. Usually -
-      'secrets.GITHUB_TOKEN'
+      GitHub token that can create/delete comments. e.g.  'secrets.GITHUB_TOKEN'
 outputs:
   new-release-published:
     description: Whether a new release was published
