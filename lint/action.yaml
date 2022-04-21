@@ -1,5 +1,5 @@
 name: GitHub Action Lint
-description: Lints GitHub Actions
+description: GitHub Action that runs lint on a GitHub Action
 inputs:
   checkout-repo:
     required: false
@@ -12,7 +12,7 @@ runs:
   using: composite
   steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       if: inputs.checkout-repo
       with:
         fetch-depth: 0
