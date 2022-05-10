@@ -14,7 +14,7 @@ jobs:
       - name: Lint
         uses: ./lint
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.OPEN_TURO_GITHUB_TOKEN }}
 
   test:
     name: Test
@@ -25,7 +25,7 @@ jobs:
       - name: Test
         uses: ./test
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.OPEN_TURO_GITHUB_TOKEN }}
 
   action-test:
     name: Test / Action
