@@ -9,32 +9,28 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: Lint
         uses: ./lint
         with:
+          checkout-repo: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: Test
         uses: ./test
         with:
+          checkout-repo: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
   action-test:
     name: Test / Action
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: Release
         uses: ./release
-        id: release
         with:
+          checkout-repo: true
           dry-run: true
