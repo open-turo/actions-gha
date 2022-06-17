@@ -11,7 +11,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Release
+        with:
+          fetch-depth: 0
+      - name: Lint
         uses: ./lint
   release:
     needs:
@@ -23,6 +25,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Release
         uses: ./release
-        id: release
