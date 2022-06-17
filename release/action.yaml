@@ -22,13 +22,13 @@ inputs:
 outputs:
   new-release-published:
     description: Whether a new release was published
-    value: ${{ steps.release.outputs.new-release-published }}
+    value: ${{ steps.release.outputs.new_release_published }}
   new-release-version:
     description: Version of the new release
-    value: ${{ steps.release.outputs.new-release-version }}
+    value: ${{ steps.release.outputs.new_release_version }}
   new-release-major-version:
     description: Major version of the new release
-    value: ${{ steps.release.outputs.release-major }}
+    value: ${{ steps.release.outputs.new_release_major_version }}
 runs:
   using: composite
   steps:
@@ -39,20 +39,20 @@ runs:
         fetch-depth: 0
     - name: Semantic release
       id: release
-      uses: cycjimmy/semantic-release-action@v2
+      uses: cycjimmy/semantic-release-action@v3
       env:
         GITHUB_TOKEN: ${{ inputs.github-token || env.GITHUB_TOKEN }}
       with:
         dry_run: ${{ inputs.dry-run }}
         extra_plugins: ${{ inputs.extra-plugins }}
     - name: Fetch tags
-      if: steps.release.outputs.new-release-published == 'true'
+      if: steps.release.outputs.new_release_published == 'true'
       shell: bash
       run: |
         git fetch --tags
         git clean -fd
     - name: Major branch
-      if: steps.release.outputs.new-release-published == 'true'
+      if: steps.release.outputs.new_release_published == 'true'
       uses: open-turo/action-major-release@v1
       with:
-        major-version: ${{ steps.release.outputs.new-release-major-version }}
+        major-version: ${{ steps.release.outputs.new_release_major_version }}
