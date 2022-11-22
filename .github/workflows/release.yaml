@@ -17,6 +17,7 @@ jobs:
         uses: ./lint
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
   release:
     needs:
       - lint
