@@ -26,32 +26,27 @@ runs:
           echo "and commit the changes"
           exit 1
         fi
-    - name: Check for run instructions
-      uses: peter-evans/find-comment@v1
-      if: github.event_name == 'pull_request' && always()
-      id: fc
+    - name: Instruct PR author that they need to run npm run prepare to get their PR to cleanly pass CI
+      if: failure()
+      uses: open-turo/action-conditional-pr-comment@v1
       with:
-        issue-number: ${{ github.event.pull_request.number }}
-        comment-author: "github-actions[bot]"
-        body-includes: "npm run prepare"
-    - name: Create instructions comment
-      if: github.event_name == 'pull_request' && failure() && steps.fc.outputs.comment-id == ''
-      uses: peter-evans/create-or-update-comment@v1
-      with:
-        issue-number: ${{ github.event.pull_request.number }}
-        body: |
+        workflow: ADD
+        text-detector: "npm run prepare"
+        comment: |
           Changes need to be built and committed to `./dist`.
 
           In your local repo, run:
           ```
           npm run prepare
           git commit -a --amend --no-edit
+          git push --force-with-lease
           ```
-          This will add those changes to your last commit.  Push that to your PR.
-    - name: Delete instructions comment
-      if: github.event_name == 'pull_request' && success() && steps.fc.outputs.comment-id != ''
-      uses: jungwinter/comment@v1
+          This will add those changes to your last commit, and get them pushed to the remote.
+        comment-author: "github-actions[bot]"
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Delete instructions comment from PR if they exist
+      uses: open-turo/action-conditional-pr-comment@v1
       with:
-        type: delete
-        comment_id: ${{ steps.fc.outputs.comment-id }}
-        token: ${{ inputs.github-token }}
+        workflow: REMOVE
+        text-detector: "npm run prepare"
+        github-token: ${{ secrets.GITHUB_TOKEN }}
