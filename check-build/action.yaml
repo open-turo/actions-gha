@@ -28,7 +28,7 @@ runs:
         fi
     - name: Check for run instructions
       uses: peter-evans/find-comment@v1
-      if: github.event_name == 'pull_request' && (success() || failure())
+      if: github.event_name == 'pull_request' && always()
       id: fc
       with:
         issue-number: ${{ github.event.pull_request.number }}
@@ -40,7 +40,7 @@ runs:
       with:
         issue-number: ${{ github.event.pull_request.number }}
         body: |
-          Changes need to be built and commited to `./dist`.
+          Changes need to be built and committed to `./dist`.
 
           In your local repo, run:
           ```
