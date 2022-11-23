@@ -20,10 +20,15 @@ runs:
       if: hashFiles('package-lock.json') != ''
       shell: bash
       run: npm ci
-    - name: Install actionlint
-      uses: KeisukeYamashita/setup-release@v1.0.2
-      with:
-        repository: rhysd/actionlint
+    - name: Install actionlint via bash
+      shell: bash
+      run: |
+        bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+        actionLintVersion=`./actionlint -version | sed -n 1p`
+        destDir="/opt/hostedtoolcache/release/$actionLintVersion"
+        mkdir -p "$destDir"
+        mv actionlint "$destDir"
+        echo "$destDir" >> "$GITHUB_PATH"
     - name: Pre-commit
       uses: open-turo/action-pre-commit@v1
     - name: Check build
