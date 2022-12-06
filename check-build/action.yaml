@@ -43,10 +43,10 @@ runs:
           ```
           This will add those changes to your last commit, and get them pushed to the remote.
         comment-author: "github-actions[bot]"
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ inputs.github-token }}
     - name: Delete instructions comment from PR if they exist
       uses: open-turo/action-conditional-pr-comment@v1
       with:
         workflow: REMOVE
         text-detector: "npm run prepare"
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ inputs.github-token }}
