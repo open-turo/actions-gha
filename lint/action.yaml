@@ -21,7 +21,7 @@ runs:
       shell: bash
       run: npm ci
     - name: Install actionlint
-      uses: KeisukeYamashita/setup-release@v1.0.2
+      uses: open-turo/action-install-release@v1
       with:
         repository: rhysd/actionlint
     - name: Pre-commit
