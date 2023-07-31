@@ -37,6 +37,13 @@ runs:
       if: inputs.checkout-repo
       with:
         fetch-depth: 0
+    # TODO(shakefu): This is a work around while we resolve the compatibility
+    # issue with cycjimmy's action and SemVer >20
+    - uses: open-turo/action-setup-tools@v1
+    # Install open-turo semantic release config
+    - name: Install dependencies
+      shell: bash
+      run: npm install '@open-turo/semantic-release-config@^1.4.0' --no-save
     - name: Semantic release
       id: release
       uses: cycjimmy/semantic-release-action@v3
