@@ -22,13 +22,13 @@ inputs:
 outputs:
   new-release-published:
     description: Whether a new release was published
-    value: ${{ steps.release.outputs.new_release_published }}
+    value: ${{ steps.release.outputs.new-release-published }}
   new-release-version:
     description: Version of the new release
-    value: ${{ steps.release.outputs.new_release_version }}
+    value: ${{ steps.release.outputs.new-release-version }}
   new-release-major-version:
     description: Major version of the new release
-    value: ${{ steps.release.outputs.new_release_major_version }}
+    value: ${{ steps.release.outputs.new-release-major-version }}
 runs:
   using: composite
   steps:
@@ -37,29 +37,22 @@ runs:
       if: inputs.checkout-repo
       with:
         fetch-depth: 0
-    # TODO(shakefu): This is a work around while we resolve the compatibility
-    # issue with cycjimmy's action and SemVer >20
-    - uses: open-turo/action-setup-tools@v1
-    # Install open-turo semantic release config
-    - name: Install dependencies
-      shell: bash
-      run: npm install '@open-turo/semantic-release-config@^1.4.0' --no-save
     - name: Semantic release
       id: release
-      uses: cycjimmy/semantic-release-action@v3
+      uses: open-turo/actions-release/semantic-release@v2
       env:
         GITHUB_TOKEN: ${{ inputs.github-token || env.GITHUB_TOKEN }}
       with:
-        dry_run: ${{ inputs.dry-run }}
-        extra_plugins: ${{ inputs.extra-plugins }}
+        dry-run: ${{ inputs.dry-run }}
+        extra-plugins: ${{ inputs.extra-plugins }}
     - name: Fetch tags
-      if: steps.release.outputs.new_release_published == 'true'
+      if: steps.release.outputs.new-release-published == 'true'
       shell: bash
       run: |
         git fetch --tags
         git clean -fd
     - name: Major branch
-      if: steps.release.outputs.new_release_published == 'true'
+      if: steps.release.outputs.new-release-published == 'true'
       uses: open-turo/action-major-release@v1
       with:
-        major-version: ${{ steps.release.outputs.new_release_major_version }}
+        major-version: ${{ steps.release.outputs.new-release-major-version }}
