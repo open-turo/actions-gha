@@ -21,7 +21,7 @@ runs:
         npm ci
         npm test -- --coverage
     - name: Coveralls
-      uses: coverallsapp/github-action@master
+      uses: coverallsapp/github-action@v2
       if: hashFiles('package-lock.json') != ''
       with:
         github-token: ${{ inputs.github-token }}
