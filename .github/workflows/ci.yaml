@@ -40,4 +40,7 @@ jobs:
       - name: Release
         uses: ./release
         with:
+          checkout-repo: false
           dry-run: true
+          extra-plugins: |
+            @open-turo/semantic-release-config
