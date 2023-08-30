@@ -46,13 +46,13 @@ runs:
         dry-run: ${{ inputs.dry-run }}
         extra-plugins: ${{ inputs.extra-plugins }}
     - name: Fetch tags
-      if: steps.release.outputs.new-release-published == 'true'
+      if: steps.release.outputs.new-release-published == 'true' && inputs.dry-run != 'true'
       shell: bash
       run: |
         git fetch --tags
         git clean -fd
     - name: Major branch
-      if: steps.release.outputs.new-release-published == 'true'
+      if: steps.release.outputs.new-release-published == 'true' && inputs.dry-run != 'true'
       uses: open-turo/action-major-release@v1
       with:
         major-version: ${{ steps.release.outputs.new-release-major-version }}
