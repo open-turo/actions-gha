@@ -50,6 +50,7 @@ jobs:
       - name: Release
         uses: ./release
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           checkout-repo: false
           dry-run: true
           extra-plugins: |
