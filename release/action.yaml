@@ -43,6 +43,7 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.github-token || env.GITHUB_TOKEN }}
       with:
+        github-token: ${{ inputs.github-token || env.GITHUB_TOKEN }}
         dry-run: ${{ inputs.dry-run }}
         extra-plugins: ${{ inputs.extra-plugins }}
     - name: Fetch tags
