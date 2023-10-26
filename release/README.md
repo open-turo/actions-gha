@@ -23,28 +23,39 @@ steps:
 ```
 
 **IMPORTANT**: `GITHUB_TOKEN` does not have the required permissions to operate on protected branches.
-If you are using this action for protected branches, replace `GITHUB_TOKEN` with [Personal Access Token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line). If using the `@semantic-release/git` plugin for protected branches, avoid persisting credentials as part of `actions/checkout@v3` by setting the parameter `persist-credentials: false`. This credential does not have the required permission to operate on protected branches.
+If you are using this action for protected branches, replace `GITHUB_TOKEN` with [Personal Access Token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line). If using the `@semantic-release/git` plugin for protected branches, avoid persisting credentials as part of `actions/checkout@v4` by setting the parameter `persist-credentials: false`. This credential does not have the required permission to operate on protected branches.
 
+<!-- prettier-ignore-start -->
+<!-- action-docs-inputs -->
 ## Inputs
 
-| parameter     | description                                                                                                                                                               | required | default                            |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ---------------------------------- |
-| checkout-repo | Perform checkout as first step of action                                                                                                                                  | `false`  | true                               |
-| dry-run       | Whether to run semantic release in `dry-run` mode. It will override the `dryRun` attribute in your configuration file                                                     | `false`  |                                    |
-| extra-plugins | Extra plugins for pre-install. You can also specify specifying version range for the extra plugins if you prefer. Defaults to install @open-turo/semantic-release-config. | `false`  | @open-turo/semantic-release-config |
-| github-token  | GitHub token that can create/delete comments. e.g. 'secrets.GITHUB_TOKEN'                                                                                                 | `false`  |                                    |
+| parameter | description | required | default |
+| --- | --- | --- | --- |
+| checkout-repo | Perform checkout as first step of action | `false` | true |
+| dry-run | Whether to run semantic release in `dry-run` mode. It will override the `dryRun` attribute in your configuration file | `false` |  |
+| extra-plugins | Extra plugins for pre-install. You can also specify specifying version range for the extra plugins if you prefer.  Defaults to install @open-turo/semantic-release-config. | `false` | @open-turo/semantic-release-config  |
+| github-token | GitHub token that can create/delete comments. e.g.  'secrets.GITHUB_TOKEN' | `false` |  |
+<!-- action-docs-inputs -->
 
+<!-- action-docs-outputs -->
 ## Outputs
 
-| parameter                 | description                         |
-| ------------------------- | ----------------------------------- |
-| new-release-published     | Whether a new release was published |
-| new-release-version       | Version of the new release          |
-| new-release-major-version | Major version of the new release    |
+| parameter | description |
+| --- | --- |
+| new-release-published | Whether a new release was published |
+| new-release-version | Version of the new release |
+| new-release-major-version | Major version of the new release |
+<!-- action-docs-outputs -->
 
+<!-- action-docs-runs -->
 ## Runs
 
-This action is an `composite` action.
+This action is a `composite` action.
+<!-- action-docs-runs -->
+
+<!-- action-docs-usage  -->
+<!-- action-docs-usage -->
+<!-- prettier-ignore-end -->
 
 ## Additional Examples
 

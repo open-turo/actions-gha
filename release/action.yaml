@@ -33,13 +33,13 @@ runs:
   using: composite
   steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       if: inputs.checkout-repo == 'true'
       with:
         fetch-depth: 0
     - name: Semantic release
       id: release
-      uses: open-turo/actions-release/semantic-release@v2
+      uses: open-turo/actions-release/semantic-release@v4
       env:
         GITHUB_TOKEN: ${{ inputs.github-token || env.GITHUB_TOKEN }}
       with:
