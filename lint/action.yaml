@@ -12,10 +12,13 @@ runs:
   using: composite
   steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       if: inputs.checkout-repo == 'true'
       with:
         fetch-depth: 0
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
     - name: Run npm ci if needed
       if: hashFiles('package-lock.json') != ''
       shell: bash
@@ -31,3 +34,6 @@ runs:
       if: hashFiles('package-lock.json') != ''
       with:
         github-token: ${{ inputs.github-token }}
+    - name: Check release notes on pull_request
+      if: github.event_name == 'pull_request'
+      uses: open-turo/actions-release/lint-release-notes@v4
