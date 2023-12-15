@@ -43,6 +43,7 @@ This action runs the following lint checks:
 | --- | --- | --- | --- |
 | checkout-repo | Perform checkout as first step of action | `false` | true |
 | github-token | GitHub token that can create/delete comments. Usually - 'secrets.GITHUB_TOKEN' | `true` |  |
+| node-version | Node version to use | `false` | 18 |
 <!-- action-docs-inputs -->
 
 <!-- action-docs-outputs -->
