@@ -12,6 +12,11 @@ inputs:
     required: false
     description: Node version to use
     default: "18"
+  semantic-release-extra-plugins:
+    required: false
+    description: Extra plugins for pre-install when linting the release notes. You can also specify specifying version range for the extra plugins if you prefer.  Defaults to install @open-turo/semantic-release-config.
+    default: |
+      @open-turo/semantic-release-config
 runs:
   using: composite
   steps:
@@ -41,3 +46,5 @@ runs:
     - name: Check release notes on pull_request
       if: github.event_name == 'pull_request'
       uses: open-turo/actions-release/lint-release-notes@v4
+      with:
+        extra-plugins: ${{ inputs.semantic-release-extra-plugins }}

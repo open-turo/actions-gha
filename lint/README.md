@@ -44,6 +44,7 @@ This action runs the following lint checks:
 | checkout-repo | Perform checkout as first step of action | `false` | true |
 | github-token | GitHub token that can create/delete comments. Usually - 'secrets.GITHUB_TOKEN' | `true` |  |
 | node-version | Node version to use | `false` | 18 |
+| semantic-release-extra-plugins | Extra plugins for pre-install when linting the release notes. You can also specify specifying version range for the extra plugins if you prefer.  Defaults to install @open-turo/semantic-release-config. | `false` | @open-turo/semantic-release-config  |
 <!-- action-docs-inputs -->
 
 <!-- action-docs-outputs -->
