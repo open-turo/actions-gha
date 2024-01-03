@@ -17,7 +17,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           semantic-release-extra-plugins: |
-            @open-turo/semantic-release-config@4.0.3
+            @open-turo/semantic-release-config
 
   test:
     name: Test
@@ -45,4 +45,4 @@ jobs:
           checkout-repo: false
           dry-run: true
           extra-plugins: |
-            @open-turo/semantic-release-config@4.0.3
+            @open-turo/semantic-release-config
