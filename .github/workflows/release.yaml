@@ -34,4 +34,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           extra-plugins: |
-            @open-turo/semantic-release-config
+            @open-turo/semantic-release-config@4.0.3
