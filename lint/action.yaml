@@ -39,7 +39,7 @@ runs:
     - name: Pre-commit
       uses: open-turo/action-pre-commit@v3
     - name: Check build
-      uses: open-turo/actions-gha/check-build@v1
+      uses: open-turo/actions-gha/check-build@v2
       if: hashFiles('package-lock.json') != ''
       with:
         github-token: ${{ inputs.github-token }}
