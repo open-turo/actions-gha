@@ -37,7 +37,7 @@ runs:
       with:
         repository: rhysd/actionlint
     - name: Pre-commit
-      uses: open-turo/action-pre-commit@v2
+      uses: open-turo/action-pre-commit@v3
     - name: Check build
       uses: open-turo/actions-gha/check-build@v1
       if: hashFiles('package-lock.json') != ''
