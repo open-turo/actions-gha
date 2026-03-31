@@ -45,6 +45,6 @@ runs:
         github-token: ${{ inputs.github-token }}
     - name: Check release notes on pull_request
       if: github.event_name == 'pull_request'
-      uses: open-turo/actions-release/lint-release-notes@v4
+      uses: open-turo/actions-release/lint-release-notes@v5
       with:
         extra-plugins: ${{ inputs.semantic-release-extra-plugins }}
