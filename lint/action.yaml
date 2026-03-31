@@ -25,7 +25,7 @@ runs:
       if: inputs.checkout-repo == 'true'
       with:
         fetch-depth: 0
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v5
       with:
         node-version: ${{ inputs.node-version }}
     - name: Run npm ci if needed
