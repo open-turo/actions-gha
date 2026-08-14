@@ -8,10 +8,6 @@ inputs:
   github-token:
     required: true
     description: GitHub token that can create/delete comments. Usually - 'secrets.GITHUB_TOKEN'
-  node-version:
-    required: false
-    description: Node version to use
-    default: "24"
   semantic-release-extra-plugins:
     required: false
     description: Extra plugins for pre-install when linting the release notes. You can also specify specifying version range for the extra plugins if you prefer.  Defaults to install @open-turo/semantic-release-config.
@@ -25,9 +21,8 @@ runs:
       if: inputs.checkout-repo == 'true'
       with:
         fetch-depth: 0
-    - uses: actions/setup-node@v7
-      with:
-        node-version: ${{ inputs.node-version }}
+    - name: Setup tools
+      uses: open-turo/action-setup-tools@v3
     - name: Run npm ci if needed
       if: hashFiles('package-lock.json') != ''
       shell: bash
