@@ -7,6 +7,8 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Setup tools
+      uses: open-turo/action-setup-tools@v3
     - name: Run ci
       shell: bash
       run: npm ci
